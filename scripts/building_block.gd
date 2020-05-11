@@ -25,6 +25,11 @@ func _ready():
 	
 	# hide delete bubble to start with
 	delete_bubble.visible = false
+	
+	if object_remover_system_node.delete_selected == true:
+		delete_bubble.visible = true
+	
+	
 
 #
 #func _exit_tree():
@@ -38,11 +43,11 @@ func _on_Object_Remover_System_remove_mode_toggled():
 
 func _on_Object_Remover_System_remove_mode_disabled():
 	hide_delete_bubble()
-
+	
 
 func _on_Object_Remover_System_remove_mode_enabled():
 	show_delete_bubble()
-
+	
 
 func toggle_delete_bubble():
 	delete_bubble.visible = !delete_bubble.visible

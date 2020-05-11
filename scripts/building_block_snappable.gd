@@ -7,6 +7,7 @@ class_name BuildingBlockSnappable
 
 signal block_snapped_updated
 
+
 var moving_to_snap := false setget set_moving_to_snap, get_moving_to_snap
 var snapped := false setget set_snapped, get_snapped
 var overlapping := false setget set_overlapping, get_overlapping
@@ -206,7 +207,6 @@ func spawn_measure_point(
 	if volt_measure_points.has(connection_side):
 		# if yes, add connection id
 		volt_measure_points[connection_side].add_connection_id(connection_id)
-		print("already a measure point on this block -> new connection side added")
 		update_measure_point_pos(connection_side, snap_area_pos)
 		return
 	
@@ -214,7 +214,6 @@ func spawn_measure_point(
 	if other_block.volt_measure_points.has(other_connection_side):
 		volt_measure_points[connection_side] = other_block.volt_measure_points[other_connection_side]
 		volt_measure_points[connection_side].add_connection_id(connection_id)
-		print("already a measure point on other block -> new connection side added")
 		update_measure_point_pos(connection_side, snap_area_pos)
 		return
 	
@@ -222,15 +221,14 @@ func spawn_measure_point(
 	var current_mp = measure_point_scene.instance()
 	all_measure_points.add_child(current_mp)
 	volt_measure_points[connection_side] = current_mp
-	print("no measure point -> new point created")
 
 	current_mp.global_transform.origin = snap_area_pos + Vector3(0, 0.15, 0)
 	current_mp.global_transform.basis = global_transform.basis
-			
+
 	# update connection_id
 	current_mp.set_measure_point_type(MeasurePoint.MeasurePointType.CONNECTION)
 	current_mp.add_connection_id(connection_id)
-	
+
 	# add reference to other block, too
 	other_block.add_measure_point_ref(other_connection_side, current_mp)
 
