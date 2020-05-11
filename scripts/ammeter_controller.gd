@@ -8,6 +8,8 @@ signal ampere_measured
 signal ammeter_selected
 signal ammeter_unselected
 
+var ammeter_selected = false
+
 onready var body_label = $BodyLabel
 onready var measure_amp_sound = $AudioStreamPlayer3DMeasureAmpere
 
@@ -37,10 +39,13 @@ func _on_right_ARVRController_button_pressed(button_number):
 func _on_Base_Controller_controller_selected():
 	._on_Base_Controller_controller_selected()
 	body_label.set_label_text("Touch an A-Box and press Trigger")
+	ammeter_selected = true
 	emit_signal("ammeter_selected")
 
 
 # override parent
 func _on_Base_Controller_controller_unselected():
 	._on_Base_Controller_controller_selected()
+	ammeter_selected = false
 	emit_signal("ammeter_unselected")
+	

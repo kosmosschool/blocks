@@ -40,6 +40,13 @@ func _ready():
 	if measure_point_type == MeasurePointType.BLOCK:
 		parent_block = get_parent()
 	
+	if ammeter_controller.ammeter_selected == true and measure_point_type == MeasurePointType.BLOCK:
+		visible = true
+#		update_monitoring(true)
+	if voltmeter_controller.voltmeter_selected == true and measure_point_type == MeasurePointType.CONNECTION:
+		visible = true
+		
+	
 	# connect
 	ammeter_controller.connect("ammeter_selected", self, "_on_Ammeter_Controller_ammeter_selected")
 	ammeter_controller.connect("ammeter_unselected", self, "_on_Ammeter_Controller_ammeter_unselected")
@@ -99,10 +106,11 @@ func get_current() -> float:
 func update_cube_visibility() -> void:
 	if !cube_ampere or !cube_volt:
 		return
-		
+
 	if measure_point_type == MeasurePointType.BLOCK:
 		cube_ampere.visible = true
 		cube_volt.visible = false
+
 	else:
 		cube_ampere.visible = false
 		cube_volt.visible = true
